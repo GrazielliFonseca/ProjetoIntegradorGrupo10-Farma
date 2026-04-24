@@ -1,5 +1,5 @@
 export interface Avaliacao {
-    id: number;
+    id?: number;
     estrelas: number;
     descricao: string;
     data_avaliacao: Date;

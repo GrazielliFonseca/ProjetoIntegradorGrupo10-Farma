@@ -1,5 +1,5 @@
 export interface Produto {
-    id: number;
+    id?: number;
     nome: string;
     descricao_curta: string;
     volume_ml: number;

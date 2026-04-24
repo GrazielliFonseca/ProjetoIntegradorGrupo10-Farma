@@ -1,5 +1,5 @@
 export interface ItensCompra {
-    id: number;
+    id?: number;
     id_compra: number;
     id_produto: number;
     qtd: number;

@@ -6,7 +6,7 @@ export class avaliacaoRepository {
   CriarAvaliacao(avaliacao: Avaliacao): Avaliacao {
 
     if (!avaliacao.id_usuario || avaliacao.id_usuario <= 0) {
-      throw new Error("Operação negada: Apenas usuários autenticados podem realizar avaliações.");
+      throw new Error("Operação negada: Apenas usuários logados podem realizar avaliações.");
     }
     const data = avaliacao.data_avaliacao || new Date().toISOString();
   

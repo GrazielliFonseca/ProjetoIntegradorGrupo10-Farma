@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS compra (
   data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
   valor_total DECIMAL(10, 2) NOT NULL,
   forma_pagto VARCHAR(50) NOT NULL CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')), 
-  status VARCHAR(50) DEFAULT 'Pendente',
+  status VARCHAR(50) CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
   id_endereco INTEGER NOT NULL,
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (id_endereco) REFERENCES endereco(id)
