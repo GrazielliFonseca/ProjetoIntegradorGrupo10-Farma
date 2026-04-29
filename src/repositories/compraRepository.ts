@@ -1,29 +1,24 @@
 import db from "../database/database";
 import { Compra } from "../models/compraModel";
-import { ItensCompraRepository } from './itensCompraRepository';
 
 export class CompraRepository {
-  private itensRepo = new ItensCompraRepository();
 
-  iniciarCompra(id_usuario: number, valor_total: number, itens: any[]): number | null {
-    try {
-      const stmt = db.prepare(`
-        INSERT INTO compra (id_usuario, valor_total, status, data_hora) 
-        VALUES (?, ?, 'Pendente', datetime('now'))
-      `);
+  iniciarCompra(id_usuario: number, valor_unitario: number, qtd: number): number | null {
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO compra (id_usuario, valor_total, quantidade, status, data_hora) 
+      VALUES (?, ?, ?, 'Pendente', datetime('now'))
+    `);
 
-      const resultado = stmt.run(id_usuario, valor_total);
-      const id_compra = Number(resultado.lastInsertRowid);
+    const resultado = stmt.run(id_usuario, valor_unitario, qtd);
+    const id_compra = Number(resultado.lastInsertRowid);
 
-      for (const item of itens) {
-        this.itensRepo.salvarItem(id_compra, item);
-      }
-
-      return id_compra;
-    } catch (erro) {
-      return null;
-    }
+    return id_compra;
+  } catch (erro) {
+    console.error("Erro ao iniciar compra:", erro);
+    return null;
   }
+}
 
   // Define a FK do endereço que já deve estar cadastrado
   vincularEndereco(id_compra: number, id_endereco: number): boolean {
@@ -50,7 +45,7 @@ export class CompraRepository {
     try {
       // Busca a compra, os dados do usuário e os dados do endereço via JOIN
       const compra = db.prepare(`
-        SELECT c.*, e.rua, e.numero, e.bairro, e.cidade
+        SELECT c.*, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado
         FROM compra c
         LEFT JOIN endereco e ON c.id_endereco = e.id
         WHERE c.id = ?
@@ -58,9 +53,7 @@ export class CompraRepository {
 
       if (!compra) return null;
 
-      const itens = db.prepare("SELECT * FROM itens_compra WHERE id_compra = ?").all(id_compra);
-
-      return { ...compra, itens };
+      return compra;
     } catch (erro) {
       return null;
     }

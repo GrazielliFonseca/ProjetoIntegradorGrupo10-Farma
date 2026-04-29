@@ -45,19 +45,11 @@ CREATE TABLE IF NOT EXISTS compra (
   id_usuario INTEGER NOT NULL,
   data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
   valor_total DECIMAL(10, 2) NOT NULL,
+  qtd INT NOT NULL CHECK (qtd > 0),
+  valor_unitario DECIMAL(10, 2) NOT NULL,
   forma_pagto VARCHAR(50) NOT NULL CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')), 
   status VARCHAR(50) CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
   id_endereco INTEGER NOT NULL,
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (id_endereco) REFERENCES endereco(id)
-);
-
-CREATE TABLE IF NOT EXISTS itens_compra (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  id_compra INT not NULL,
-  id_produto INT not NULL,
-  qtd INT not NULL CHECK (qtd > 0),
-  valor_unitario DECIMAL(10,2) not NULL CHECK (valor_unitario >= 0),
-  FOREIGN KEY (id_compra) REFERENCES compra(id),
-  FOREIGN KEY (id_produto) REFERENCES produto(id)
 );
