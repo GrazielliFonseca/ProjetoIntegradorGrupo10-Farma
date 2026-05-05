@@ -43,7 +43,6 @@ export class CompraRepository {
 
   revisarCompra(id_compra: number): any {
     try {
-      // Busca a compra, os dados do usuário e os dados do endereço via JOIN
       const compra = db.prepare(`
         SELECT c.*, e.cep, e.rua, e.numero, e.complemento, e.bairro, e.cidade, e.estado
         FROM compra c
@@ -61,7 +60,7 @@ export class CompraRepository {
 
   finalizarCompra(id_compra: number): boolean {
     try {
-      const stmt = db.prepare("UPDATE compra SET status = 'Finalizada' WHERE id = ?");
+      const stmt = db.prepare("UPDATE compra SET status = 'Finalizado' WHERE id = ?");
       const resultado = stmt.run(id_compra);
       return resultado.changes > 0;
     } catch (erro) {

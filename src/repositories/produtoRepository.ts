@@ -26,4 +26,14 @@ export class ProdutoRepository {
     return null;
   }
  }
+
+ mostrar(): Produto[] {
+    try {
+      const produtos = db.prepare("SELECT * FROM produto").all() as Produto[];
+      return produtos;
+    } catch (erro) {
+      console.error("Erro ao buscar produtos:", erro);
+      return [];
+    }
+  }
 }

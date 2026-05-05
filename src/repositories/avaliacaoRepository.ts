@@ -1,7 +1,7 @@
 import db from "../database/database";
 import { Avaliacao } from "../models/avaliacaoModel";
 
-export class avaliacaoRepository {
+export class AvaliacaoRepository {
   
   CriarAvaliacao(avaliacao: Avaliacao): Avaliacao {
 
@@ -26,13 +26,13 @@ export class avaliacaoRepository {
     const novaAvaliacao = { 
         ...avaliacao, 
         id: Number(resultado.lastInsertRowid),
-        data_avaliacao: data 
+        data_avaliacao: data as any
     };
     return novaAvaliacao;
   }
 
 
-  listar(): Avaliacao[] {
+  mostrar(): Avaliacao[] {
     const avaliacoes = db.prepare("SELECT * FROM avaliacao").all() as Avaliacao[];
     return avaliacoes;
   }
