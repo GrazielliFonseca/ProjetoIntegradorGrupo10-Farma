@@ -1,0 +1,111 @@
+###Avaliações
+###Criar avaliação
+POST http://localhost:3000/avaliacao
+Content-Type: application/json
+
+{
+"id_usuario": 1,
+"id_produto": 1,
+"estrelas": 5,
+"comentario": "Produto de excelente qualidade, recomendo!"
+}
+
+###Listar todas as avaliações
+GET http://localhost:3000/avaliacao
+
+###Fluxo de Compra
+###Iniciar uma compra
+POST http://localhost:3000/compra/iniciar
+Content-Type: application/json
+
+{
+"id_usuario": 1,
+"valor_unitario": 45.00,
+"quantidade": 2
+}
+
+###Vincular endereço à compra
+PUT http://localhost:3000/compra/endereco
+Content-Type: application/json
+
+{
+"id_compra": 1,
+"id_endereco": 1
+}
+
+###Definir forma de pagamento
+PUT http://localhost:3000/compra/pagamento
+Content-Type: application/json
+
+{
+"id_compra": 1,
+"forma_pagto": "Pix"
+}
+
+###Revisar detalhes da compra
+GET http://localhost:3000/compra/revisar/1
+
+###Finalizar compra
+PUT http://localhost:3000/compra/finalizar
+Content-Type: application/json
+
+{
+"id_compra": 1
+}
+
+###Endereços
+###Cadastrar novo endereço
+POST http://localhost:3000/endereco
+Content-Type: application/json
+
+{
+"rua": "Avenida Adélia",
+"numero": "100",
+"complemento": "Apto 12",
+"bairro": "Vila Santa Rosa",
+"cidade": "Guarujá",
+"estado": "SP",
+"cep": "11430-000",
+"id_usuario": 1
+}
+
+###Buscar endereço por ID
+GET http://localhost:3000/endereco/1
+
+###Usuários
+###Criar novo usuário
+POST http://localhost:3000/usuario
+Content-Type: application/json
+
+{
+"nome": "Grazielli Fonseca",
+"email": "grazi@gmail.com",
+"senha": "123456"
+}
+
+###Realizar Login
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+"email": "grazi@gmail.com",
+"senha": "123456"
+}
+
+###Produto
+###Cadastrar novo produto
+POST http://localhost:3000/produto
+Content-Type: application/json
+
+{
+"nome": "Creme Hidratante Calmavera",
+"descricao_curta": "Creme com camomila e aloe vera para pele sensível.",
+"volume_ml": 200,
+"indicacao": "Peles secas e irritadas",
+"preco": 45.00,
+"estoque_minimo": 10,
+"imagem_principal_url": "https://link-da-imagem.com/calmavera.jpg"
+}
+
+###Listar todos os produtos
+GET http://localhost:3000/produto

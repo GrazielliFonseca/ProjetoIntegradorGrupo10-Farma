@@ -6,16 +6,17 @@ export function CompraController() {
 
   app.post("/compra/iniciar", (req, res) => {
     try {
-      const { id_usuario, valor_unitario, qtd } = req.body;
+      const { id_usuario, valor_unitario } = req.body;
+      const quantidade = req.body.quantidade ?? req.body.qtd;
 
       if (!id_usuario) throw new Error("O ID do usuário é obrigatório.");
       if (!valor_unitario || valor_unitario <= 0) throw new Error("Valor unitário inválido.");
-      if (!qtd || qtd <= 0) throw new Error("A quantidade deve ser maior que zero.");
+      if (!quantidade || quantidade <= 0) throw new Error("A quantidade deve ser maior que zero.");
 
       const id_compra = repository.iniciarCompra(
         Number(id_usuario),
         Number(valor_unitario),
-        Number(qtd)
+        Number(quantidade)
       );
 
       if (!id_compra) throw new Error("Erro ao processar início da compra no banco de dados.");

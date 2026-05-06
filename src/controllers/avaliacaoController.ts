@@ -6,19 +6,19 @@ export function AvaliacaoController() {
 
   app.post("/avaliacao", (req, res) => {
     try {
-      const { nota, comentario, id_usuario, id_produto } = req.body;
-      
+      const {estrelas, comentario, id_usuario, id_produto } = req.body;
+
       if (!comentario) throw new Error("O comentário é obrigatório.");
       if (!id_produto) throw new Error("O ID do produto é obrigatório.");
-      if (!nota || nota < 1 || nota > 5) throw new Error("A nota deve estar entre 1 e 5.");
+      if (!estrelas || estrelas < 1 || estrelas > 5) throw new Error("A nota deve estar entre 1 e 5.");
       if (!id_usuario) throw new Error("O ID do usuário é obrigatório.");
 
       const novaAvaliacao = {
-        estrelas: nota,
-        descricao: comentario,
+        estrelas: estrelas,
+        comentario: comentario,
         id_usuario: Number(id_usuario),
         id_produto: Number(id_produto),
-        data_avaliacao: new Date()
+        data_avaliacao: new Date().toISOString()
       };
 
       const resultado = repository.CriarAvaliacao(novaAvaliacao);

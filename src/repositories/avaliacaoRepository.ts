@@ -8,17 +8,16 @@ export class AvaliacaoRepository {
     if (!avaliacao.id_usuario || avaliacao.id_usuario <= 0) {
       throw new Error("Operação negada: Apenas usuários logados podem realizar avaliações.");
     }
-    const data = avaliacao.data_avaliacao || new Date().toISOString();
   
     const resultado = db
       .prepare(`
-        INSERT INTO avaliacao (estrelas, descricao, data_avaliacao, id_produto, id_usuario) 
+        INSERT INTO avaliacao (estrelas, comentario, data_avaliacao, id_produto, id_usuario) 
         VALUES (?, ?, ?, ?, ?)
       `)
       .run(
         avaliacao.estrelas, 
-        avaliacao.descricao, 
-        data, 
+        avaliacao.comentario, 
+        avaliacao.data_avaliacao, 
         avaliacao.id_produto, 
         avaliacao.id_usuario
       );
@@ -26,7 +25,6 @@ export class AvaliacaoRepository {
     const novaAvaliacao = { 
         ...avaliacao, 
         id: Number(resultado.lastInsertRowid),
-        data_avaliacao: data as any
     };
     return novaAvaliacao;
   }

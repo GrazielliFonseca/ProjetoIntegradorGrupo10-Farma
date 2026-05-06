@@ -3,14 +3,15 @@ import { Compra } from "../models/compraModel";
 
 export class CompraRepository {
 
-  iniciarCompra(id_usuario: number, valor_unitario: number, qtd: number): number | null {
+  iniciarCompra(id_usuario: number, valor_unitario: number, quantidade: number): number | null {
   try {
+    const valorTotal = valor_unitario * quantidade;
     const stmt = db.prepare(`
-      INSERT INTO compra (id_usuario, valor_total, quantidade, status, data_hora) 
-      VALUES (?, ?, ?, 'Pendente', datetime('now'))
+      INSERT INTO compra (id_usuario, valor_total, quantidade, valor_unitario, status, data_hora) 
+      VALUES (?, ?, ?, ?, 'Pendente', datetime('now'))
     `);
 
-    const resultado = stmt.run(id_usuario, valor_unitario, qtd);
+    const resultado = stmt.run(id_usuario, valorTotal, quantidade, valor_unitario);
     const id_compra = Number(resultado.lastInsertRowid);
 
     return id_compra;

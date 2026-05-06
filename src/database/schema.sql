@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS avaliacao (
   id_usuario INT NOT NULL,
   id_produto INT NOT NULL,
   estrelas INT NOT NULL CHECK (estrelas BETWEEN 1 AND 5),
-  descricao VARCHAR(255),
+  comentario VARCHAR(255),
   data_avaliacao DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (id_produto) REFERENCES produto(id)
@@ -45,11 +45,11 @@ CREATE TABLE IF NOT EXISTS compra (
   id_usuario INTEGER NOT NULL,
   data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
   valor_total DECIMAL(10, 2) NOT NULL,
-  qtd INT NOT NULL CHECK (qtd > 0),
+  quantidade INT NOT NULL CHECK (quantidade > 0),
   valor_unitario DECIMAL(10, 2) NOT NULL,
-  forma_pagto VARCHAR(50) NOT NULL CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')), 
-  status VARCHAR(50) CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
-  id_endereco INTEGER NOT NULL,
+  forma_pagto VARCHAR(50) CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')), 
+  status VARCHAR(50) DEFAULT 'Pendente' CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
+  id_endereco INTEGER,
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (id_endereco) REFERENCES endereco(id)
 );
