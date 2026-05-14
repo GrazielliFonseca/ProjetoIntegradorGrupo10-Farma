@@ -20,9 +20,21 @@ const compraColumns = db.prepare("PRAGMA table_info(compra)").all() as Array<{
 }>;
 const formaPagtoColumn = compraColumns.find((column) => column.name === "forma_pagto");
 const enderecoColumn = compraColumns.find((column) => column.name === "id_endereco");
+const valorFreteColumn = compraColumns.find((column) => column.name === "valor_frete");
 const compraSql = db
   .prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'compra'")
   .get() as { sql?: string } | undefined;
+
+if (!valorFreteColumn) {
+  db.exec(`ALTER TABLE compra ADD COLUMN valor_frete DECIMAL(10, 2) DEFAULT 12.50;`);
+}
+
+const usuarioColumns = db.prepare("PRAGMA table_info(usuario)").all() as Array<{ name: string }>;
+const dataCadastroColumn = usuarioColumns.find((column) => column.name === "data_cadastro");
+if (!dataCadastroColumn) {
+  db.exec(`ALTER TABLE usuario ADD COLUMN data_cadastro DATETIME;`);
+  db.exec(`UPDATE usuario SET data_cadastro = datetime('now') WHERE data_cadastro IS NULL;`);
+}
 
 const compraPrecisaMigrar =
   formaPagtoColumn?.notnull === 1 ||
@@ -40,6 +52,7 @@ if (compraPrecisaMigrar) {
         valor_total DECIMAL(10, 2) NOT NULL,
         quantidade INT NOT NULL CHECK (quantidade > 0),
         valor_unitario DECIMAL(10, 2) NOT NULL,
+        valor_frete DECIMAL(10, 2) DEFAULT 12.50,
         forma_pagto VARCHAR(50) CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')),
         status VARCHAR(50) DEFAULT 'Pendente' CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
         id_endereco INTEGER,
