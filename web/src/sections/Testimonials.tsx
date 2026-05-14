@@ -57,8 +57,8 @@ export function Testimonials() {
           name: a.nome_usuario ?? `Usuário #${a.id_usuario}`,
           rating: a.estrelas,
           comment: a.comentario,
-          date: (a.data_avaliacao || a.data)
-            ? new Date(a.data_avaliacao || a.data!).toLocaleDateString("pt-BR")
+          date: a.data_avaliacao
+            ? new Date(a.data_avaliacao).toLocaleDateString("pt-BR")
             : new Date().toLocaleDateString("pt-BR"),
         }));
         if (mapped.length) setReviews([...mapped, ...seed]);

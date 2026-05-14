@@ -25,7 +25,7 @@ export type Avaliacao = {
   id_produto: number;
   estrelas: number;
   comentario: string;
-  data?: string;
+  data_avaliacao?: string;
   nome_usuario?: string;
 };
 
