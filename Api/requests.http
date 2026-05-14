@@ -1,6 +1,6 @@
 ###Avaliações
 ###Criar avaliação
-POST http://localhost:4010/avaliacao
+POST http://localhost:3010/avaliacao
 Content-Type: application/json
 
 {
@@ -11,11 +11,11 @@ Content-Type: application/json
 }
 
 ###Listar todas as avaliações
-GET http://localhost:4010/avaliacao
+GET http://localhost:3010/avaliacao
 
 ###Fluxo de Compra
 ###Iniciar uma compra
-POST http://localhost:4010/compra/iniciar
+POST http://localhost:3010/compra/iniciar
 Content-Type: application/json
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ###Vincular endereço à compra
-PUT http://localhost:4010/compra/endereco
+PUT http://localhost:3010/compra/endereco
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
 }
 
 ###Definir forma de pagamento
-PUT http://localhost:4010/compra/pagamento
+PUT http://localhost:3010/compra/pagamento
 Content-Type: application/json
 
 {
@@ -43,10 +43,10 @@ Content-Type: application/json
 }
 
 ###Revisar detalhes da compra
-GET http://localhost:4010/compra/revisar/1
+GET http://localhost:3010/compra/revisar/1
 
 ###Finalizar compra
-PUT http://localhost:4010/compra/finalizar
+PUT http://localhost:3010/compra/finalizar
 Content-Type: application/json
 
 {
@@ -55,7 +55,7 @@ Content-Type: application/json
 
 ###Endereços
 ###Cadastrar novo endereço
-POST http://localhost:4010/endereco
+POST http://localhost:3010/endereco
 Content-Type: application/json
 
 {
@@ -70,11 +70,11 @@ Content-Type: application/json
 }
 
 ###Buscar endereço por ID
-GET http://localhost:4010/endereco/1
+GET http://localhost:3010/endereco/1
 
 ###Usuários
 ###Criar novo usuário
-POST http://localhost:4010/usuario
+POST http://localhost:3010/usuario
 Content-Type: application/json
 
 {
@@ -84,7 +84,7 @@ Content-Type: application/json
 }
 
 ###Realizar Login
-POST http://localhost:4010/login
+POST http://localhost:3010/login
 Content-Type: application/json
 
 {
@@ -94,7 +94,7 @@ Content-Type: application/json
 
 ###Produto
 ###Cadastrar novo produto
-POST http://localhost:4010/produto
+POST http://localhost:3010/produto
 Content-Type: application/json
 
 {
@@ -108,4 +108,16 @@ Content-Type: application/json
 }
 
 ###Listar todos os produtos
-GET http://localhost:4010/produto
+GET http://localhost:3010/produto
+
+### Carregar dados do Painel Admin
+GET http://localhost:3010/admin/painel
+
+###Login admin
+POST http://localhost:3010/admin/login
+Content-Type: application/json
+
+{
+  "usuario": "admin@gmail.com",
+  "senha": "admin"
+}

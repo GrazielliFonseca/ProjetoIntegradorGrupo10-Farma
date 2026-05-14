@@ -5,6 +5,7 @@ import { CompraController } from "./controllers/compraController";
 import { EnderecoController } from "./controllers/enderecoController";
 import { ProdutoController } from "./controllers/produtoController";
 import { UsuarioController } from "./controllers/usuarioController";
+import { AdminController } from "./controllers/adminController";
 
 export const app = express();
 
@@ -28,7 +29,8 @@ CompraController();
 EnderecoController();
 ProdutoController();
 UsuarioController();
+AdminController();
 
-app.listen(4010, () => {
-  console.log("Servidor rodando em http://localhost:4010");
+app.listen(3010, () => {
+  console.log("Servidor rodando em http://localhost:3010");
 });

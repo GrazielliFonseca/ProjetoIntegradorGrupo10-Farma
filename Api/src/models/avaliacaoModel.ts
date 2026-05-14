@@ -5,4 +5,5 @@ export interface Avaliacao {
     data_avaliacao: string;
     id_produto: number;
     id_usuario: number;
+    nome_usuario?: string;
 }

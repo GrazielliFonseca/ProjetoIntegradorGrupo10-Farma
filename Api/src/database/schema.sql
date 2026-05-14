@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS usuario (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   nome VARCHAR(100) NOT NULL CHECK (length(trim(nome)) > 0),
   email VARCHAR(100) UNIQUE NOT NULL CHECK (email LIKE '%@%'),
-  senha TEXT NOT NULL
+  senha TEXT NOT NULL,
+  data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS endereco (
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS compra (
   valor_total DECIMAL(10, 2) NOT NULL,
   quantidade INT NOT NULL CHECK (quantidade > 0),
   valor_unitario DECIMAL(10, 2) NOT NULL,
+  valor_frete DECIMAL(10, 2) DEFAULT 12.50,
   forma_pagto VARCHAR(50) CHECK (forma_pagto IN ('Cartão de Crédito', 'Cartão de Débito', 'Pix')), 
   status VARCHAR(50) DEFAULT 'Pendente' CHECK (status IN ('Pendente', 'Finalizado', 'Cancelado')),
   id_endereco INTEGER,

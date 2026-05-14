@@ -21,7 +21,8 @@ export function AvaliacaoController() {
         data_avaliacao: new Date().toISOString()
       };
 
-      const resultado = repository.CriarAvaliacao(novaAvaliacao);
+      const idCriado = repository.CriarAvaliacao(novaAvaliacao);
+      const resultado = repository.buscarPorId(idCriado);
       
       res.status(201).json(resultado);
     } catch (err) {
