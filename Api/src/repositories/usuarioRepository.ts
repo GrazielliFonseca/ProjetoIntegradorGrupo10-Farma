@@ -5,8 +5,8 @@ export class UsuarioRepository {
   criarUsuario(usuario: Usuario): number | null {
     try {
       const stmt = db.prepare(`
-        INSERT INTO usuario (nome, email, senha) 
-        VALUES (?, ?, ?)
+        INSERT INTO usuario (nome, email, senha, data_cadastro) 
+        VALUES (?, ?, ?, datetime('now'))
       `);
       const resultado = stmt.run(usuario.nome, usuario.email, usuario.senha);
       return Number(resultado.lastInsertRowid);
