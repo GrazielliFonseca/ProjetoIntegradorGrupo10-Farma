@@ -1,6 +1,7 @@
 // Cliente HTTP para a API Calmavera
 const BASE_URL =
-  (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:4010";
+  (import.meta.env.VITE_API_URL as string | undefined) ?? "https://grupo10projeto20261.escolatecnicaadelia.info/api";
+;
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {

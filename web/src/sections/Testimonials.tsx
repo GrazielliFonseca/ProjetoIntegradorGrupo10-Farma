@@ -57,8 +57,8 @@ export function Testimonials() {
           name: a.nome_usuario ?? `Usuário #${a.id_usuario}`,
           rating: a.estrelas,
           comment: a.comentario,
-          date: a.data
-            ? new Date(a.data).toLocaleDateString("pt-BR")
+          date: (a.data_avaliacao || a.data)
+            ? new Date(a.data_avaliacao || a.data!).toLocaleDateString("pt-BR")
             : new Date().toLocaleDateString("pt-BR"),
         }));
         if (mapped.length) setReviews([...mapped, ...seed]);
@@ -93,8 +93,9 @@ export function Testimonials() {
       toast.error("Faça login novamente");
       return;
     }
+    let created: import("@/lib/api").Avaliacao;
     try {
-      await avaliacaoApi.criar({
+      created = await avaliacaoApi.criar({
         id_usuario: user.id,
         id_produto: 1,
         estrelas: rating,
@@ -105,10 +106,12 @@ export function Testimonials() {
       return;
     }
     const newReview: Review = {
-      name: user.name,
-      rating,
-      comment: comment.trim(),
-      date: new Date().toLocaleDateString("pt-BR"),
+      name: created.nome_usuario ?? user.name,
+      rating: created.estrelas,
+      comment: created.comentario,
+      date: created.data_avaliacao
+        ? new Date(created.data_avaliacao).toLocaleDateString("pt-BR")
+        : new Date().toLocaleDateString("pt-BR"),
     };
     setReviews([newReview, ...reviews]);
     setOpen(false);
