@@ -1,4 +1,4 @@
-import { Outlet, createRootRoute, HeadContent, Scripts, Link } from "@tanstack/react-router";
+import { Outlet, createRootRoute, HeadContent, Scripts, Link, useRouterState } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
@@ -67,17 +67,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const { location } = useRouterState();
+  const isAdmin = location.pathname.startsWith("/admin");
   return (
     <AuthProvider>
       <CartProvider>
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-          <SupportButton />
-        </div>
+        {isAdmin ? (
+          <Outlet />
+        ) : (
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <Footer />
+            <SupportButton />
+          </div>
+        )}
         <Toaster richColors position="top-right" />
       </CartProvider>
     </AuthProvider>

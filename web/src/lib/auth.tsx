@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { usuarioApi } from "./api";
 
-export type User = { id?: number; name: string; email: string };
+export type User = { id?: number; name: string; email: string; isAdmin?: boolean };
+
+const ADMIN_EMAIL = "admin@gmail.com";
+const ADMIN_PASSWORD = "admin";
 
 type AuthContextValue = {
   user: User | null;
@@ -44,6 +47,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login: AuthContextValue["login"] = async (email, password) => {
+    if (email.trim().toLowerCase() === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      persist({ id: 0, name: "Administrador", email: ADMIN_EMAIL, isAdmin: true });
+      return { ok: true };
+    }
     try {
       const res = await usuarioApi.login({ email, senha: password });
       persist({ id: res.id, name: res.nome, email: res.email });

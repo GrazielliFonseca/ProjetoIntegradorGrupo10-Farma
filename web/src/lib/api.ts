@@ -1,7 +1,6 @@
 // Cliente HTTP para a API Calmavera
 const BASE_URL =
   (import.meta.env.VITE_API_URL as string | undefined) ?? "https://grupo10projeto20261.escolatecnicaadelia.info/api";
-;
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
@@ -21,10 +20,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 // ===== Tipos =====
 export type Avaliacao = {
   id?: number;
-  id_usuario: number;
+  id_usuario: number; 
   id_produto: number;
   estrelas: number;
   comentario: string;
+  data?: string;
   data_avaliacao?: string;
   nome_usuario?: string;
 };
@@ -144,6 +144,41 @@ export const usuarioApi = {
 };
 
 // ===== Produto =====
+// ===== Admin =====
+export type AdminCompra = {
+  usuario: string;
+  valor: number;
+  quantidade: number;
+  data: string;
+  endereco: string;
+  forma_pagto: string;
+};
+
+export type AdminUsuario = {
+  nome: string;
+  data_cadastro: string;
+};
+
+export type AdminMetricaMensal = {
+  mes: string;
+  vendas: number;
+  faturamento: number;
+};
+
+export type AdminPainel = {
+  faturamento_total: number;
+  itens_vendidos: number;
+  total_pedidos: number;
+  ticket_medio: number;
+  vendas_por_mes: AdminMetricaMensal[];
+  compras: AdminCompra[];
+  usuarios: AdminUsuario[];
+};
+
+export const adminApi = {
+  painel: () => request<AdminPainel>("/admin/painel"),
+};
+
 export const produtoApi = {
   cadastrar: (data: Produto) =>
     request<Produto>("/produto", { method: "POST", body: JSON.stringify(data) }),
@@ -156,4 +191,5 @@ export const api = {
   endereco: enderecoApi,
   usuario: usuarioApi,
   produto: produtoApi,
+  admin: adminApi,
 };

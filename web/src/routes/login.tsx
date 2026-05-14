@@ -23,7 +23,9 @@ function LoginPage() {
     const r = await login(email, password);
     if (!r.ok) return toast.error(r.error);
     toast.success("Bem-vindo de volta!");
-    navigate({ to: (search.redirect ?? "/") as "/" });
+    const isAdminLogin = email.trim().toLowerCase() === "admin@gmail.com";
+    const dest = search.redirect ?? (isAdminLogin ? "/admin" : "/");
+    navigate({ to: dest as "/" });
   };
 
   return (
